@@ -51,6 +51,7 @@ class TrelloExporter:
         except Exception:
             return []
 
+    # format checklists for export
     def format_checklist_data(self, checklists: list[dict]) -> str:
         if not checklists:
             return ""
@@ -79,6 +80,7 @@ class TrelloExporter:
 
         return "\n".join(formatted)
 
+    # extract links from powerup attachments
     def extract_powerup_links(self, attachments: list[dict], markdown_format: bool = True) -> dict[str, str]:
         powerup_data = {
             'GitHub PRs': [],
@@ -132,6 +134,7 @@ class TrelloExporter:
             return ""
         return ", ".join([l.get('name', l.get('color', '')) for l in labels])
 
+    # get story points from card size powerup
     def get_card_story_points(self, card_id: str | None = None, plugin_data: list[dict] | None = None) -> int | None:
         try:
             CARD_SIZE_PLUGIN_ID = "5cd476e1efce1d2e0cbe53a8"
@@ -184,6 +187,7 @@ class TrelloExporter:
         except:
             return None
 
+    # map trello priority numbers to youtrack priority names
     def map_trello_priority_to_youtrack(self, trello_priority: str) -> str:
         priority_map = {
             "1": "Highest",

@@ -30,6 +30,7 @@ class YouTrackImporter:
     def get_projects(self) -> list[dict]:
         return self._make_request('GET', '/admin/projects', params={'fields': 'id,name'})
 
+    # get board columns and their states
     def get_board_states(self, board_id: str) -> dict[str, str]:
         board = self._make_request(
             'GET',
@@ -102,6 +103,7 @@ class YouTrackImporter:
         except Exception:
             return []
 
+    # assign multiple users to an issue
     def assign_issue_multiple(self, issue_id: str, user_logins: list[str]) -> dict | None:
         try:
             payload = {
@@ -178,6 +180,7 @@ class YouTrackImporter:
         except Exception:
             return None
 
+    # import a trello card as youtrack issue
     def import_trello_card(self, project_id: str, card_data: dict,
                           state_map: dict | None = None,
                           user_map: dict | None = None,

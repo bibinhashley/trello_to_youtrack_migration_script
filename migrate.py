@@ -29,6 +29,7 @@ class Migration:
         except (FileNotFoundError, json.JSONDecodeError):
             pass
 
+    # extract card id from trello url
     def extract_card_id_from_url(self, url_or_id: str) -> str:
         url_or_id = url_or_id.strip()
         if '/c/' in url_or_id:
@@ -61,6 +62,7 @@ class Migration:
                 return [c for c in cards if c.get('idList') == list_id and not c.get('closed')]
         return []
 
+    # get all lists with their cards from a board
     def get_all_lists_with_cards(self, board_id: str) -> dict[str, list[dict]]:
         board_data = self.trello.get_board_data(board_id)
         lists_map = {lst['id']: lst['name'] for lst in board_data.get('lists', [])}
@@ -106,6 +108,7 @@ class Migration:
         except Exception:
             return {}
 
+    # prepare cards data for import to youtrack
     def prepare_cards_for_import(self, cards: list[dict], list_name: str, board_name: str) -> str:
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         temp_csv = f"temp_migration_{timestamp}.csv"
